@@ -1,11 +1,12 @@
 package main
 
 import (
-	"fatloss/config"
 	"fmt"
 	"os"
 
 	"github.com/jessevdk/go-flags"
+	"github.com/leogtzr/fatloss/app"
+	"github.com/leogtzr/fatloss/config"
 )
 
 type ActivityFactorOptions struct {
@@ -19,13 +20,11 @@ type CaloriesMaintenanceOptions struct {
 	Height float32 `short:"h" long:"height" description:"Height in cm."`
 }
 
-// options ...
 type Options struct {
-	CaloriesMaintenance CaloriesMaintenanceOptions `group:"Maintenance Calories Options" required:"true"`
-	ActivityFactor      ActivityFactorOptions      `group:"Activity Factor Options" required:"true"`
+	CaloriesMaintenance CaloriesMaintenanceOptions `group:"Maintenance Calories Options"`
+	ActivityFactor      ActivityFactorOptions      `group:"Activity Factor Options"`
 }
 
-// activityFactorDescription ...
 const activityFactorDescription = `	    Sedentary (little or no exercise):
             	calories = BMR × 1.2;
                         
@@ -41,28 +40,23 @@ const activityFactorDescription = `	    Sedentary (little or no exercise):
             Extra active (very hard exercise/sports & a physical job):s
             	calories = BMR × 1.9.`
 
-var options Options
-
-var parser = flags.NewParser(&options, flags.Default)
-
-func printArgs(args []string) {
-	fmt.Println("Args ... begin")
-	for _, arg := range args {
-		fmt.Println(arg)
-	}
-	fmt.Println("Args ... end")
-}
+var (
+	options Options
+	parser  = flags.NewParser(&options, flags.Default)
+)
 
 func main() {
-	// Command-line argument parsing goes here...
-
-	args, err := parser.Parse()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
+	if _, err := parser.Parse(); err != nil {
+		switch flagsErr := err.(type) {
+		case flags.ErrorType:
+			if flagsErr == flags.ErrHelp {
+				os.Exit(0)
+			}
+			os.Exit(1)
+		default:
+			os.Exit(1)
+		}
 	}
-
-	printArgs(args)
 
 	if options.ActivityFactor.Activity {
 		fmt.Println(activityFactorDescription)
@@ -75,5 +69,9 @@ func main() {
 	cfg.Height = options.CaloriesMaintenance.Height
 	cfg.Weight = options.CaloriesMaintenance.Weight
 
-	fmt.Println(cfg)
+	err := app.Run(cfg)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
+		os.Exit(1)
+	}
 }
