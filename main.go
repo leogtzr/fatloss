@@ -10,14 +10,14 @@ import (
 )
 
 type ActivityFactorOptions struct {
-	Activity bool `short:"t" long:"activity" description:"Display activity factor"`
+	Activity bool `long:"activity" description:"Display activity factor"`
 }
 
 type CaloriesMaintenanceOptions struct {
-	Age    int     `short:"a" long:"age" description:"Age"`
-	Gender string  `short:"g" long:"gender" description:"Male/Female"`
-	Weight float32 `short:"w" long:"weight" description:"Weight in kg."`
-	Height float32 `short:"h" long:"height" description:"Height in cm."`
+	Age    int     `long:"age" description:"Age"`
+	Gender string  `long:"gender" description:"Male/Female"`
+	Weight float32 `long:"weight" description:"Weight in kg."`
+	Height float32 `long:"height" description:"Height in cm."`
 }
 
 type Options struct {
