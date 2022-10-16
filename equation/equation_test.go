@@ -51,6 +51,18 @@ func TestEquations(t *testing.T) {
 			expectedMifflinStJeorResult: 3586.699951,
 			expectedHarrisBenedict:      2297.584961,
 		},
+		{
+			cfg:                         config.Config{Age: 25, Gender: "F", Height: 160, Weight: 70},
+			activityFactor:              activity.ExtraActive,
+			expectedMifflinStJeorResult: 4396.6,
+			expectedHarrisBenedict:      2816.394531,
+		},
+		{
+			cfg:                         config.Config{Age: 25, Gender: "M", Height: 160, Weight: 100},
+			activityFactor:              activity.VeryActive,
+			expectedMifflinStJeorResult: 3243,
+			expectedHarrisBenedict:      3543.11,
+		},
 	}
 
 	for _, tc := range tests {
