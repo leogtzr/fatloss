@@ -45,6 +45,7 @@ func New() Config {
 
 func ToGender(gender string) (Gender, error) {
 	gender = strings.ToLower(gender)
+
 	if err := validateGender(gender); err != nil {
 		return Unspecified, err
 	}
@@ -54,6 +55,10 @@ func ToGender(gender string) (Gender, error) {
 		return Female, nil
 	case string(Male):
 		return Male, nil
+	case "m":
+		return Male, nil
+	case "f":
+		return Female, nil
 	default:
 		return Unspecified, nil
 	}
