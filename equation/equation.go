@@ -58,6 +58,7 @@ func (eq MifflinStJeorEquation) Calories() (float32, error) {
 	}
 
 	return -1.0, fmt.Errorf("unable to calculate calories")
+
 }
 
 func (mc MaintenanceCalories) Calories(eq Equation) (float32, error) {

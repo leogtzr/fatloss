@@ -9,3 +9,7 @@ clean:
 
 build:
 	go build
+
+cover:
+	go test -v ./... -coverprofile ./cp.out
+	go tool cover -html=cp.out
