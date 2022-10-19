@@ -81,7 +81,7 @@ func TestEquations(t *testing.T) {
 		}
 	})
 
-	t.Run("Check equation calculations with unspecified genders", func(t *testing.T) {
+	t.Run("Check Mifflin St. Jeor equation calculations with different genders", func(t *testing.T) {
 		type testCase struct {
 			cfg            config.Config
 			activityFactor activity.ActivityFactor
@@ -119,6 +119,11 @@ func TestEquations(t *testing.T) {
 				activityFactor: activity.VeryActive,
 				shouldError:    true,
 			},
+			{
+				cfg:            config.Config{Age: 25, Gender: string(config.Unspecified), Height: 160, Weight: 100},
+				activityFactor: activity.VeryActive,
+				shouldError:    true,
+			},
 		}
 
 		for _, tc := range tests {
@@ -126,6 +131,62 @@ func TestEquations(t *testing.T) {
 			harrisBenedictEquation := HarrisBenedictEquation{Config: tc.cfg}
 
 			if _, err := maintenance.Calories(harrisBenedictEquation); (err != nil) != tc.shouldError {
+				t.Errorf("calculation should have failed due to unknown gender")
+			}
+		}
+
+	})
+
+	t.Run("Check HarrisBenedict equation calculations with different genders", func(t *testing.T) {
+		type testCase struct {
+			cfg            config.Config
+			activityFactor activity.ActivityFactor
+			shouldError    bool
+		}
+
+		tests := []testCase{
+			{
+				cfg:            config.Config{Age: 31, Gender: "ABC", Height: 173, Weight: 73},
+				activityFactor: activity.LightlyActive,
+				shouldError:    true,
+			},
+			{
+				cfg:            config.Config{Age: 31, Gender: "DEF", Height: 173, Weight: 73},
+				activityFactor: activity.LightlyActive,
+				shouldError:    true,
+			},
+			{
+				cfg:            config.Config{Age: 25, Gender: "F", Height: 160, Weight: 74},
+				activityFactor: activity.Sedentary,
+				shouldError:    false,
+			},
+			{
+				cfg:            config.Config{Age: 25, Gender: "F", Height: 160, Weight: 70},
+				activityFactor: activity.ModeratelyActive,
+				shouldError:    false,
+			},
+			{
+				cfg:            config.Config{Age: 25, Gender: "Male", Height: 160, Weight: 70},
+				activityFactor: activity.ExtraActive,
+				shouldError:    false,
+			},
+			{
+				cfg:            config.Config{Age: 25, Gender: "fem", Height: 160, Weight: 100},
+				activityFactor: activity.VeryActive,
+				shouldError:    true,
+			},
+			{
+				cfg:            config.Config{Age: 25, Gender: string(config.Unspecified), Height: 160, Weight: 100},
+				activityFactor: activity.VeryActive,
+				shouldError:    true,
+			},
+		}
+
+		for _, tc := range tests {
+			maintenance := MaintenanceCalories{Config: tc.cfg, ActivityFactor: tc.activityFactor}
+			mifflinStJeorEquation := MifflinStJeorEquation{Config: tc.cfg}
+
+			if _, err := maintenance.Calories(mifflinStJeorEquation); (err != nil) != tc.shouldError {
 				t.Errorf("calculation should have failed due to unknown gender")
 			}
 		}

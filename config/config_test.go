@@ -32,6 +32,10 @@ func TestConfig(t *testing.T) {
 				want:   Female,
 			},
 			{
+				gender: "male",
+				want:   Male,
+			},
+			{
 				gender: "female",
 				want:   Female,
 			},
