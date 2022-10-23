@@ -10,7 +10,7 @@ import (
 )
 
 type ActivityFactorOptions struct {
-	Activity bool `long:"activity" description:"Display activity factor"`
+	Activity bool `long:"activity" description:"Display activity factors"`
 }
 
 type CaloriesMaintenanceOptions struct {

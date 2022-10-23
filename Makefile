@@ -1,6 +1,8 @@
 # fatloss Makefile is used to drive the build and installation of fatloss
 # this is meant to be used with a local copy of code repository.
 
+default: build ;
+
 test:
 	go test ./...
 
