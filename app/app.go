@@ -2,21 +2,10 @@ package app
 
 import (
 	"fmt"
-	"regexp"
-
 	"github.com/leogtzr/fatloss/activity"
 	"github.com/leogtzr/fatloss/config"
 	"github.com/leogtzr/fatloss/equation"
 )
-
-func validateGender(gender string) error {
-	r := regexp.MustCompile(`(?i)^(m|male|f|female)$`)
-	if !r.MatchString(gender) {
-		return fmt.Errorf("unsupported gender: %s", gender)
-	}
-
-	return nil
-}
 
 func validateOptions(cfg config.Config) error {
 	if cfg.Height <= 0 {
@@ -51,7 +40,7 @@ func printCaloriesSummary(eq equation.Equation, activityFactor activity.Activity
 }
 
 func Run(cfg config.Config) error {
-	if err := validateGender(cfg.Gender); err != nil {
+	if err := config.ValidateGender(cfg.Gender); err != nil {
 		return err
 	}
 	if err := validateOptions(cfg); err != nil {

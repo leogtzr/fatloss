@@ -1,6 +1,7 @@
 package config
 
 import (
+	"errors"
 	"fmt"
 	"regexp"
 	"strings"
@@ -19,14 +20,15 @@ type Gender string
 const (
 	Female      Gender = "female"
 	Male        Gender = "male"
-	Unspecified Gender = "Unspecified"
+	Unspecified Gender = "unspecified"
 )
 
 var genderRegex = regexp.MustCompile(`(?i)^(m|male|f|female)$`)
+var ErrUnsupportedGender = errors.New("unsupported gender")
 
-func validateGender(gender string) error {
+func ValidateGender(gender string) error {
 	if !genderRegex.MatchString(gender) {
-		return fmt.Errorf("unsupported gender: %s", gender)
+		return fmt.Errorf("error: %w", ErrUnsupportedGender)
 	}
 
 	return nil
@@ -46,7 +48,7 @@ func New() Config {
 func ToGender(gender string) (Gender, error) {
 	gender = strings.ToLower(gender)
 
-	if err := validateGender(gender); err != nil {
+	if err := ValidateGender(gender); err != nil {
 		return Unspecified, err
 	}
 
