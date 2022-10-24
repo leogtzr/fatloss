@@ -21,7 +21,7 @@ type MifflinStJeorEquation struct {
 
 type MaintenanceCalories struct {
 	Config         config.Config
-	ActivityFactor activity.ActivityFactor
+	ActivityFactor activity.Factor
 }
 
 func (eq HarrisBenedictEquation) Calories() (float32, error) {

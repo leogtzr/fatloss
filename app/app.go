@@ -18,7 +18,7 @@ func validateOptions(cfg config.Config) error {
 	return nil
 }
 
-func printCaloriesSummary(eq equation.Equation, activityFactor activity.ActivityFactor, equationType string, cfg config.Config) error {
+func printCaloriesSummary(eq equation.Equation, activityFactor activity.Factor, equationType string, cfg config.Config) error {
 	calories, err := equation.MaintenanceCalories{Config: cfg, ActivityFactor: activityFactor}.Calories(eq)
 	if err != nil {
 		return err
@@ -61,7 +61,7 @@ func Run(cfg config.Config) error {
 	fmt.Printf("Calories (Harris-Benedict): %f\n", harrisBenedictCalories)
 	fmt.Printf("Calories (Mifflin St. Jeor): %f\n\n", mifflinStJeorCalories)
 
-	for _, factor := range activity.ActivityFactors() {
+	for _, factor := range activity.Factors() {
 		_ = printCaloriesSummary(harrisBenedictEquation, factor, "Harris-Benedict", cfg)
 		_ = printCaloriesSummary(mifflinStJeorEquation, factor, "Mifflin St. Jeor", cfg)
 		fmt.Println()

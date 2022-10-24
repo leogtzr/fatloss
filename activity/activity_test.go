@@ -2,7 +2,7 @@ package activity
 
 import "testing"
 
-func equal(a, b []ActivityFactor) bool {
+func equal(a, b []Factor) bool {
 	if len(a) != len(b) {
 		return false
 	}
@@ -16,14 +16,14 @@ func equal(a, b []ActivityFactor) bool {
 
 func TestActivityFactors(t *testing.T) {
 	t.Run("Check Activity Factors values", func(t *testing.T) {
-		activityFactors := ActivityFactors()
+		activityFactors := Factors()
 		expectedActivityFactorsLength := 5
 
 		if len(activityFactors) != expectedActivityFactorsLength {
 			t.Errorf("expected %d activity factors, got=%d", expectedActivityFactorsLength, len(activityFactors))
 		}
 
-		expectedActivityFactors := []ActivityFactor{
+		expectedActivityFactors := []Factor{
 			Sedentary, LightlyActive, ModeratelyActive, VeryActive, ExtraActive,
 		}
 

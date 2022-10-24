@@ -22,7 +22,7 @@ func TestEquations(t *testing.T) {
 	t.Run("Check equation calculation results", func(t *testing.T) {
 		type testCase struct {
 			cfg                         config.Config
-			activityFactor              activity.ActivityFactor
+			activityFactor              activity.Factor
 			expectedMifflinStJeorResult float32
 			expectedHarrisBenedict      float32
 		}
@@ -84,7 +84,7 @@ func TestEquations(t *testing.T) {
 	t.Run("Check Mifflin St. Jeor equation calculations with different genders", func(t *testing.T) {
 		type testCase struct {
 			cfg            config.Config
-			activityFactor activity.ActivityFactor
+			activityFactor activity.Factor
 			shouldError    bool
 		}
 
@@ -140,7 +140,7 @@ func TestEquations(t *testing.T) {
 	t.Run("Check HarrisBenedict equation calculations with different genders", func(t *testing.T) {
 		type testCase struct {
 			cfg            config.Config
-			activityFactor activity.ActivityFactor
+			activityFactor activity.Factor
 			shouldError    bool
 		}
 
