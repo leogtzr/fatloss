@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// Config represents the parameters needed to run an equation to calculate the calories.
 type Config struct {
 	Activity bool
 	Age      int
@@ -15,17 +16,24 @@ type Config struct {
 	Height   float32
 }
 
+// Gender represents the supported genders for the equations
 type Gender string
 
 const (
-	Female      Gender = "female"
-	Male        Gender = "male"
+	// Female indicates the female gender.
+	Female Gender = "female"
+	// Male indicates the male gender.
+	Male Gender = "male"
+	// Unspecified indicates an unspecified gender.
 	Unspecified Gender = "unspecified"
 )
 
 var genderRegex = regexp.MustCompile(`(?i)^(m|male|f|female)$`)
+
+// ErrUnsupportedGender indicates that the provided gender is not supported.
 var ErrUnsupportedGender = errors.New("unsupported gender")
 
+// ValidateGender checks if the provided gender is "m", "male", "f" or "female" (case insensitive).
 func ValidateGender(gender string) error {
 	if !genderRegex.MatchString(gender) {
 		return fmt.Errorf("error: %w", ErrUnsupportedGender)
@@ -45,6 +53,7 @@ func New() Config {
 	return c
 }
 
+// ToGender is a convenience function to transform a string to a Gender.
 func ToGender(gender string) (Gender, error) {
 	gender = strings.ToLower(gender)
 
