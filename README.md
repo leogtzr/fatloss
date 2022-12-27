@@ -1,6 +1,6 @@
 # fatloss
 
-*fatloss* is a little simple to show what are your maintenance calories. It will print maintenance calories using the Harris-Benedict and the Mifflin St. Jeor equations.
+*fatloss* is a simple CLI program to show what are your maintenance calories. It will print maintenance calories using the Harris-Benedict and the Mifflin St. Jeor equations.
 
 ```
 Usage:
